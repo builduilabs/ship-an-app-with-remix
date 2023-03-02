@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "ES2019",
+    "preserveValueImports": true,
     "strict": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
