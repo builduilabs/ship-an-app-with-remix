@@ -10,6 +10,7 @@
     "target": "ES2019",
     "strict": true,
     "allowJs": true,
+    "preserveValueImports": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
