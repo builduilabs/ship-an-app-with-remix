@@ -1,5 +1,7 @@
 # Script
 
+https://www.prisma.io/
+
 ```sh
 npm install --save-dev prisma
 npm install @prisma/client
