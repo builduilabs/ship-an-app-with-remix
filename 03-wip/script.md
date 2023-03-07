@@ -1,7 +1,5 @@
 # Script
 
-- VSCode extension
-
 ```sh
 npm install --save-dev prisma
 npm install @prisma/client
@@ -11,19 +9,26 @@ npm install @prisma/client
 npx prisma init --datasource-provider sqlite
 ```
 
+- VSCode extension
+
 ```prisma
-prisma.schema
-model Joke {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  name       String
-  content    String
+// prisma.schema
+model Entry {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  date      DateTime
+  type  String
+  text      String
 }
 ```
 
 ```sh
 npx prisma db push
+```
+
+```sh
+npx prisma studio
 ```
 
 💿 Let's add that prisma/dev.db to our .gitignore so we don't accidentally commit it to our repository. We'll also want to add the .env file to the .gitignore as mentioned in the prisma output so we don't commit our secrets!
@@ -37,7 +42,7 @@ const db = new PrismaClient();
 
 db limit
 
-```
+```js
 import { PrismaClient } from "@prisma/client";
 
 let db: PrismaClient;
@@ -60,3 +65,15 @@ if (process.env.NODE_ENV === "production") {
 
 export { db };
 ```
+
+now
+
+```js
+import { PrismaClient } from "@prisma/client";
+
+let db = new PrismaClient();
+```
+
+PrismaClient is unable to be run in the browser error.
+
+Move `db` to action. Notice error goes away.

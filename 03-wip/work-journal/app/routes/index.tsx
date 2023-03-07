@@ -1,30 +1,10 @@
-import { json, redirect, type ActionArgs } from "@remix-run/node";
+import { redirect, type ActionArgs } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import { PrismaClient } from "@prisma/client";
 
 export async function action({ request }: ActionArgs) {
-  let db = new PrismaClient();
   let formData = await request.formData();
-
-  let text = formData.get("text");
-  let type = formData.get("type");
-  let date = formData.get("date");
-
-  if (
-    typeof text !== "string" ||
-    typeof type !== "string" ||
-    typeof date !== "string"
-  ) {
-    return json({ bad: "request" }, 400);
-  }
-
-  await db.entry.create({
-    data: {
-      text,
-      type,
-      date: new Date(date),
-    },
-  });
+  let data = Object.fromEntries(formData);
+  console.log(data);
 
   return redirect("/");
 }
