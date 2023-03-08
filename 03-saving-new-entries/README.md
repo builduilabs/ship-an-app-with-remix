@@ -6,6 +6,7 @@ Watch on Build UI → [buildui.com/series/my-first-remix-app/saving-new-entries]
 
 ## Links
 
+- [View the diff](https://github.com/builduilabs/my-first-remix-app/commit/a807d789c7caafdf8804a99f6f949f7e85b0a270)
 - [View the starting code](./begin)
 - [View the ending code](./end)
 
