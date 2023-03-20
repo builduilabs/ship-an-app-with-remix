@@ -8,8 +8,7 @@ export async function action({ request }: ActionArgs) {
   let db = new PrismaClient();
 
   let formData = await request.formData();
-  let values = Object.fromEntries(formData);
-  let { date, type, text } = values;
+  let { date, type, text } = Object.fromEntries(formData);
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -32,12 +31,12 @@ export async function action({ request }: ActionArgs) {
 
 export default function Index() {
   let fetcher = useFetcher();
-  let textRef = useRef<HTMLTextAreaElement>(null);
+  let textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (fetcher.state === "idle" && textRef.current) {
-      textRef.current.value = "";
-      textRef.current.focus();
+    if (fetcher.state === "idle" && textareaRef.current) {
+      textareaRef.current.value = "";
+      textareaRef.current.focus();
     }
   }, [fetcher.state]);
 
@@ -53,7 +52,7 @@ export default function Index() {
 
         <fetcher.Form method="post" className="mt-2">
           <fieldset
-            className="disabled:opacity-80"
+            className="disabled:opacity-70"
             disabled={fetcher.state === "submitting"}
           >
             <div>
@@ -69,6 +68,7 @@ export default function Index() {
               <div className="mt-4 space-x-4">
                 <label className="inline-block">
                   <input
+                    required
                     type="radio"
                     defaultChecked
                     className="mr-1"
@@ -79,7 +79,6 @@ export default function Index() {
                 </label>
                 <label className="inline-block">
                   <input
-                    required
                     type="radio"
                     className="mr-1"
                     name="type"
@@ -100,10 +99,11 @@ export default function Index() {
             </div>
             <div className="mt-4">
               <textarea
-                ref={textRef}
+                ref={textareaRef}
                 placeholder="Type your entry..."
                 name="text"
                 className="w-full text-gray-700"
+                required
               />
             </div>
             <div className="mt-2 text-right">
