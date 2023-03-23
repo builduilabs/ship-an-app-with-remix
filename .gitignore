@@ -7,3 +7,4 @@ public/build/
 .env
 
 dev.db
+dev.db-journal
