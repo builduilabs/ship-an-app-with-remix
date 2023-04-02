@@ -2,7 +2,7 @@
 
 Use our homepage's loader to render dynamic entries from our backend.
 
-Watch on Build UI → [buildui.com/series/my-first-remix-app/loading-entries]([http://buildui.com/series/my-first-remix-app/adding-pending-ui](https://buildui.com/series/my-first-remix-app/loading-entries))
+Watch on Build UI → [buildui.com/series/my-first-remix-app/loading-entries](https://buildui.com/series/my-first-remix-app/loading-entries)
 
 ## Links
 
