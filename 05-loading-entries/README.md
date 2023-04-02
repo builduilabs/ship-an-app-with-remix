@@ -1,12 +1,11 @@
-# Adding pending UI
+# Loading entries
 
-Improve our form's UX with validations, default values, and a styled pending state.
+Use our homepage's loader to render dynamic entries from our backend.
 
-Watch on Build UI → [buildui.com/series/my-first-remix-app/adding-pending-ui](http://buildui.com/series/my-first-remix-app/adding-pending-ui)
+Watch on Build UI → [buildui.com/series/my-first-remix-app/loading-entries]([http://buildui.com/series/my-first-remix-app/adding-pending-ui](https://buildui.com/series/my-first-remix-app/loading-entries))
 
 ## Links
 
-- [View the diff](https://github.com/builduilabs/my-first-remix-app/commit/4e1ceae5f0da3279f1e12c5b3f4cb69bc5686efb)
 - [View the starting code](./begin)
 - [View the ending code](./end)
 
@@ -15,7 +14,7 @@ Watch on Build UI → [buildui.com/series/my-first-remix-app/adding-pending-ui](
 From the root,
 
 ```sh
-cd 04-adding-pending-ui/end
+cd 05-loading-entries/end
 npm i
 npm run dev
 ```
