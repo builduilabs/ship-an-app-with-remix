@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { type ActionArgs } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
 
@@ -29,9 +29,17 @@ export async function action({ request }: ActionArgs) {
   });
 }
 
+export async function loader() {
+  let db = new PrismaClient();
+  let entries = await db.entry.findMany();
+
+  return entries;
+}
+
 export default function Index() {
   let fetcher = useFetcher();
   let textareaRef = useRef<HTMLTextAreaElement>(null);
+  let entries = useLoaderData<typeof loader>();
 
   useEffect(() => {
     if (fetcher.state === "idle" && textareaRef.current) {
@@ -117,6 +125,12 @@ export default function Index() {
           </fieldset>
         </fetcher.Form>
       </div>
+
+      {entries.map((entry) => (
+        <p key={entry.id}>
+          {entry.type} – {entry.text}
+        </p>
+      ))}
 
       <div className="mt-6">
         <p className="font-bold">
