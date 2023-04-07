@@ -15,7 +15,7 @@ Watch on Build UI → [buildui.com/series/my-first-remix-app/displaying-entries-
 From the root,
 
 ```sh
-cd 05-displaying-entries-by-week/end
+cd 06-displaying-entries-by-week/end
 npm i
 npm run dev
 ```
