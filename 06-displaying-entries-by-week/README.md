@@ -6,7 +6,7 @@ Watch on Build UI → [buildui.com/series/my-first-remix-app/displaying-entries-
 
 ## Links
 
-- [View the diff](https://github.com/builduilabs/my-first-remix-app/commit/8f895dda8b8847600845d785510007ed1fea860a)
+- [View the diff](https://github.com/builduilabs/my-first-remix-app/commit/b0c25636dc4ee669d54d8f4ed36ae056a27a59d6)
 - [View the starting code](./begin)
 - [View the ending code](./end)
 
