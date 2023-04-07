@@ -40,17 +40,9 @@ export async function loader() {
 }
 
 export default function Index() {
-  let entries = useLoaderData<typeof loader>();
-
   let fetcher = useFetcher();
   let textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (fetcher.state === "idle" && textareaRef.current) {
-      textareaRef.current.value = "";
-      textareaRef.current.focus();
-    }
-  }, [fetcher.state]);
+  let entries = useLoaderData<typeof loader>();
 
   let entriesByWeek = entries.reduce<Record<string, typeof entries>>(
     (memo, entry) => {
@@ -58,7 +50,7 @@ export default function Index() {
       let sundayString = format(sunday, "yyyy-MM-dd");
 
       memo[sundayString] ||= [];
-      memo[sundayString] = [...memo[sundayString], entry];
+      memo[sundayString].push(entry);
 
       return memo;
     },
@@ -67,18 +59,23 @@ export default function Index() {
 
   let weeks = Object.keys(entriesByWeek)
     .sort((a, b) => a.localeCompare(b))
-    .map((startingDate) => ({
-      startingDate,
-      work: entriesByWeek[startingDate].filter(
-        (entry) => entry.type === "work"
-      ),
-      learnings: entriesByWeek[startingDate].filter(
+    .map((dateString) => ({
+      dateString,
+      work: entriesByWeek[dateString].filter((entry) => entry.type === "work"),
+      learnings: entriesByWeek[dateString].filter(
         (entry) => entry.type === "learning"
       ),
-      interestingThings: entriesByWeek[startingDate].filter(
+      interestingThings: entriesByWeek[dateString].filter(
         (entry) => entry.type === "interesting-thing"
       ),
     }));
+
+  useEffect(() => {
+    if (fetcher.state === "idle" && textareaRef.current) {
+      textareaRef.current.value = "";
+      textareaRef.current.focus();
+    }
+  }, [fetcher.state]);
 
   return (
     <div className="p-10">
@@ -158,11 +155,11 @@ export default function Index() {
         </fetcher.Form>
       </div>
 
-      <div className="space-y-16">
+      <div className="mt-12 space-y-12">
         {weeks.map((week) => (
-          <div key={week.startingDate} className="mt-6">
+          <div key={week.dateString}>
             <p className="font-bold">
-              Week of {format(parseISO(week.startingDate), "MMMM do")}
+              Week of {format(parseISO(week.dateString), "MMMM do")}
             </p>
             <div className="mt-3 space-y-4">
               {week.work.length > 0 && (
