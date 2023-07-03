@@ -13,7 +13,3 @@ defaultValue={format(new Date(), "yyyy-MM-dd")}
 Still want required in case user clears.
 
 fieldet, disabled = submitting
-
-Disable JavaScript
-
-max-width?
