@@ -1,20 +1,19 @@
-create `entries.$entryId.edit.tsx`
+# Script
 
-Create EntryListItem for each type
+Add requireds.
 
-```tsx
-function EntryListItem({ entry }: { entry: Entry }) {
-  return (
-    <li className="group">
-      <span>{entry.text}</span>
-      <Link
-        preventScrollReset
-        to={`/entries/${entry.id}/edit`}
-        className="ml-2 font-medium text-blue-500 opacity-0 focus:opacity-100 group-hover:opacity-100"
-      >
-        Edit
-      </Link>
-    </li>
-  );
-}
+Add default values.
+
+Date.
+
+```jsx
+defaultValue={format(new Date(), "yyyy-MM-dd")}
 ```
+
+Still want required in case user clears.
+
+fieldet, disabled = submitting
+
+Disable JavaScript
+
+max-width?
