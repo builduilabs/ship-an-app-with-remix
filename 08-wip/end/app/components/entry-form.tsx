@@ -4,7 +4,11 @@ import { useRef } from "react";
 export default function EntryForm({
   entry,
 }: {
-  entry: { text: string; date: string; type: string };
+  entry: {
+    text: string;
+    date: string;
+    type: string;
+  };
 }) {
   let fetcher = useFetcher();
   let textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,8 +70,8 @@ export default function EntryForm({
             placeholder="Type your entry..."
             name="text"
             className="w-full text-gray-700"
-            defaultValue={entry.text}
             required
+            defaultValue={entry.text}
           />
         </div>
         <div className="mt-2 text-right">

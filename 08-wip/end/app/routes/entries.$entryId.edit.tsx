@@ -60,7 +60,7 @@ export default function EditPage() {
 
   return (
     <div className="mt-4">
-      <p className="text-xl">Editing entry {entry.id}</p>
+      <p>Editing entry {entry.id}</p>
 
       <div className="mt-8">
         <EntryForm entry={entry} />
