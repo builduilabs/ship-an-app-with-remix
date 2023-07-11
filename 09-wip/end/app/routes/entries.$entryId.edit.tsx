@@ -3,29 +3,7 @@ import { redirect, type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import EntryForm from "~/components/entry-form";
 
-export async function loader({ params }: LoaderArgs) {
-  if (typeof params.entryId !== "string") {
-    throw new Response("Not found", { status: 404 });
-  }
-
-  let db = new PrismaClient();
-  let entry = await db.entry.findUnique({ where: { id: +params.entryId } });
-
-  if (!entry) {
-    throw new Response("Not found", { status: 404 });
-  }
-
-  return {
-    ...entry,
-    date: entry.date.toISOString().substring(0, 10),
-  };
-}
-
-export async function action({ request, params }: ActionArgs) {
-  if (typeof params.entryId !== "string") {
-    throw new Response("Not found", { status: 404 });
-  }
-
+export async function action({ params, request }: ActionArgs) {
   let db = new PrismaClient();
 
   let formData = await request.formData();
@@ -42,9 +20,7 @@ export async function action({ request, params }: ActionArgs) {
   }
 
   await db.entry.update({
-    where: {
-      id: +params.entryId,
-    },
+    where: { id: +params.entryId },
     data: {
       date: new Date(date),
       type: type,
@@ -55,13 +31,19 @@ export async function action({ request, params }: ActionArgs) {
   return redirect("/");
 }
 
-export default function EditPage() {
+export async function loader({ params }: LoaderArgs) {
+  let db = new PrismaClient();
+  let entry = await db.entry.findUnique({ where: { id: +params.entryId } });
+
+  return entry;
+}
+
+export default function Page() {
   let entry = useLoaderData<typeof loader>();
 
   return (
-    <div className="mt-4">
-      <p className="text-xl">Editing entry {entry.id}</p>
-
+    <div className="mt-8">
+      <p className="text-xl">Edit entry</p>
       <div className="mt-8">
         <EntryForm entry={entry} />
       </div>

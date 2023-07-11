@@ -1,22 +1,13 @@
 import { useFetcher } from "@remix-run/react";
-import { format } from "date-fns";
-import { useEffect, useRef } from "react";
-import type { Entry } from "@prisma/client";
+import { useRef } from "react";
 
-export default function EntryForm({ entry }: { entry?: Entry }) {
+export default function EntryForm({
+  entry,
+}: {
+  entry: { text: string; date: string; type: string };
+}) {
   let fetcher = useFetcher();
   let textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (
-      fetcher.type !== "init" &&
-      fetcher.state === "idle" &&
-      textareaRef.current
-    ) {
-      textareaRef.current.value = "";
-      textareaRef.current.focus();
-    }
-  }, [fetcher.state, fetcher.type]);
 
   return (
     <fetcher.Form method="post" className="mt-2">
@@ -31,31 +22,42 @@ export default function EntryForm({ entry }: { entry?: Entry }) {
               name="date"
               required
               className="text-gray-900"
-              defaultValue={
-                entry
-                  ? format(new Date(entry.date), "yyyy-MM-dd")
-                  : format(new Date(), "yyyy-MM-dd")
-              }
+              defaultValue={entry.date}
             />
           </div>
+
           <div className="mt-4 space-x-4">
-            {[
-              { label: "Work", value: "work" },
-              { label: "Learning", value: "learning" },
-              { label: "Interesting thing", value: "interesting-thing" },
-            ].map((category) => (
-              <label key={category.value} className="inline-block">
-                <input
-                  required
-                  type="radio"
-                  defaultChecked={category.value === (entry?.type || "work")}
-                  className="mr-1"
-                  name="type"
-                  value={category.value}
-                />
-                {category.label}
-              </label>
-            ))}
+            <label className="inline-block">
+              <input
+                required
+                type="radio"
+                className="mr-1"
+                name="type"
+                value="work"
+                defaultChecked={entry.type === "work"}
+              />
+              Work
+            </label>
+            <label className="inline-block">
+              <input
+                type="radio"
+                className="mr-1"
+                name="type"
+                value="learning"
+                defaultChecked={entry.type === "learning"}
+              />
+              Learning
+            </label>
+            <label className="inline-block">
+              <input
+                type="radio"
+                className="mr-1"
+                name="type"
+                value="interesting-thing"
+                defaultChecked={entry.type === "interesting-thing"}
+              />
+              Interesting thing
+            </label>
           </div>
         </div>
         <div className="mt-4">
@@ -64,8 +66,8 @@ export default function EntryForm({ entry }: { entry?: Entry }) {
             placeholder="Type your entry..."
             name="text"
             className="w-full text-gray-700"
+            defaultValue={entry.text}
             required
-            defaultValue={entry?.text}
           />
         </div>
         <div className="mt-2 text-right">
