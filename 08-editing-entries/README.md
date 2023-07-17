@@ -2,7 +2,7 @@
 
 Build a form and action that lets users edit entries.
 
-Watch on Build UI → [buildui.com/courses/my-first-remix-app/editing-entries](buildui.com/courses/my-first-remix-app/editing-entries)
+Watch on Build UI → [buildui.com/courses/my-first-remix-app/editing-entries](https://buildui.com/courses/my-first-remix-app/editing-entries)
 
 ## Links
 

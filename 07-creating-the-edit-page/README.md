@@ -2,7 +2,7 @@
 
 Define a new dynamic route that loads an entry based on the URL.
 
-Watch on Build UI → [buildui.com/courses/my-first-remix-app/creating-the-edit-page](buildui.com/courses/my-first-remix-app/creating-the-edit-page)
+Watch on Build UI → [buildui.com/courses/my-first-remix-app/creating-the-edit-page](https://buildui.com/courses/my-first-remix-app/creating-the-edit-page)
 
 ## Links
 
