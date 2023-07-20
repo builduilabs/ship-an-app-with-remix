@@ -54,7 +54,7 @@ export default function EntryForm({
                   type="radio"
                   className="mr-1"
                   name="type"
-                  value="work"
+                  value={option.value}
                   defaultChecked={option.value === (entry?.type ?? "work")}
                 />
                 {option.label}
