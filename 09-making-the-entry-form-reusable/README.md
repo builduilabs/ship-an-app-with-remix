@@ -1,8 +1,8 @@
-# Making our form reusable
+# Making the entry form reusable
 
 Refactor our form component so it can be used to both create and edit entries.
 
-Watch on Build UI → [buildui.com/courses/my-first-remix-app/making-our-for-reusable](https://buildui.com/courses/my-first-remix-app/making-our-for-reusable)
+Watch on Build UI → [buildui.com/courses/my-first-remix-app/making-the-entry-form-reusable](https://buildui.com/courses/my-first-remix-app/making-the-entry-form-reusable)
 
 ## Links
 
@@ -14,7 +14,7 @@ Watch on Build UI → [buildui.com/courses/my-first-remix-app/making-our-for-reu
 From the root,
 
 ```sh
-cd 09-making-our-form-reusable/end
+cd 09-making-the-entry-form-reusable/end
 npm i
 npm run dev
 ```
