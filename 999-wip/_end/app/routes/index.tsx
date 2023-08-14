@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { type ActionArgs } from "@remix-run/node";
+import { createCookieSessionStorage, type ActionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { format, parseISO, startOfWeek } from "date-fns";
 import EntryForm from "~/components/entry-form";
@@ -29,18 +29,49 @@ export async function action({ request }: ActionArgs) {
   });
 }
 
-export async function loader() {
+export async function loader({ request }) {
+  const storage = createCookieSessionStorage({
+    cookie: {
+      name: "work-journal-session",
+      // normally you want this to be `secure: true`
+      // but that doesn't work on localhost for Safari
+      // https://web.dev/when-to-use-local-https/
+      // secure: process.env.NODE_ENV === "production",
+      secrets: ["build-ui-secret"],
+
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+      httpOnly: true,
+    },
+  });
+
+  // Step 1: Show manual
+  // let cookie = request.headers.get("Cookie");
+  // if (typeof cookie === "string") {
+  //   let data = JSON.parse(atob(decodeURIComponent(cookie.split("=")[1])));
+  //   console.log(data);
+  //   return data;
+  // }
+
+  // Step 2: Remix storage does this for us
+  let session = await storage.getSession(request.headers.get("Cookie"));
+
   let db = new PrismaClient();
   let entries = await db.entry.findMany();
 
-  return entries.map((entry) => ({
-    ...entry,
-    date: entry.date.toISOString().substring(0, 10),
-  }));
+  return {
+    admin: !!session.data.admin,
+    entries: entries.map((entry) => ({
+      ...entry,
+      date: entry.date.toISOString().substring(0, 10),
+    })),
+  };
 }
 
 export default function Index() {
-  let entries = useLoaderData<typeof loader>();
+  let { entries, admin } = useLoaderData<typeof loader>();
+  console.log(admin);
 
   let entriesByWeek = entries.reduce<Record<string, typeof entries>>(
     (memo, entry) => {
@@ -70,11 +101,13 @@ export default function Index() {
 
   return (
     <div>
-      <div className="my-8 border p-3">
-        <p className="italic">Create a new entry</p>
+      {admin && (
+        <div className="my-8 border p-3">
+          <p className="italic">Create a new entry</p>
 
-        <EntryForm />
-      </div>
+          <EntryForm />
+        </div>
+      )}
 
       <div className="mt-12 space-y-12">
         {weeks.map((week) => (
