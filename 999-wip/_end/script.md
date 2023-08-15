@@ -1,9 +1,11 @@
 Auth
 
 1. Step
+
    - if email/pw match, return admin: true
    - doesn’t survive refresh
    - problem: use something durable
+
 2. Step: Use cookie storage
    - if email/pw match, return Response({ headers: set-cookie: “admin=true” })
      - TODO: Check this
