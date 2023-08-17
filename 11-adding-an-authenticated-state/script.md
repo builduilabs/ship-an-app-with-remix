@@ -1,8 +1,5 @@
 # Script
 
-## TODO:
-
-
 ## Step
 
 Add login route:
