@@ -1,6 +1,6 @@
 # Script
 
-## Step
+## Step: Login route
 
 Add login route:
 
@@ -36,7 +36,7 @@ export default function LoginPage() {
 }
 ```
 
-## Step
+## Step: Action + actionData
 
 Create an action
 
@@ -60,7 +60,9 @@ const data = useActionData<typeof action>();
 data?.isAdmin
 ```
 
-Problem: doesn't survive reloads! Need something durable
+Problem: doesn't survive reloads! HTTP is stateless. Need data that's durable that we can associate with subsequent HTTP requests.
+
+Solution: This is where Sessions come in.
 
 ## Step: Cookies
 
@@ -113,7 +115,13 @@ return new Response("", {
 });
 ```
 
-Setting! Now, read from storage in loader
+Look in browser - there it is! Base64 encoded to prevent transmission problems – let's decode it with atob (ascii to binary):
+
+`atob("eyJpc0FkbWluIjp0cnVlfQ==")`
+
+There it is!
+
+Now, read from storage in loader:
 
 ```tsx
 export async function loader({ request }: LoaderArgs) {
@@ -133,6 +141,8 @@ export async function loader({ request }: LoaderArgs) {
   return session.data;
 }
 ```
+
+Awesome!
 
 ## Step: Extract
 
