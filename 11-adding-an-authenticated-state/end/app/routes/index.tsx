@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import type { LoaderArgs, ActionArgs } from "@remix-run/node";
+import { type LoaderArgs, type ActionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { format, parseISO, startOfWeek } from "date-fns";
 import EntryForm from "~/components/entry-form";
@@ -31,7 +31,8 @@ export async function action({ request }: ActionArgs) {
 }
 
 export async function loader({ request }: LoaderArgs) {
-  let session = await getSession(request.headers.get("Cookie"));
+  let session = await getSession(request.headers.get("cookie"));
+
   let db = new PrismaClient();
   let entries = await db.entry.findMany();
 
@@ -131,7 +132,7 @@ export default function Index() {
 function EntryListItem({
   entry,
 }: {
-  entry: Awaited<ReturnType<typeof loader>>['entries'][number];
+  entry: Awaited<ReturnType<typeof loader>>["entries"][number];
 }) {
   return (
     <li className="group">

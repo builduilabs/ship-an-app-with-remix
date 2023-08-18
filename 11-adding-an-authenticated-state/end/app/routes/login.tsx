@@ -1,4 +1,4 @@
-import { redirect, type ActionArgs, type LoaderArgs } from "@remix-run/node";
+import { type LoaderArgs, type ActionArgs, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/session";
 
@@ -11,7 +11,9 @@ export async function action({ request }: ActionArgs) {
     session.set("isAdmin", true);
 
     return redirect("/", {
-      headers: { "Set-Cookie": await commitSession(session) },
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
     });
   } else {
     return null;
@@ -19,33 +21,35 @@ export async function action({ request }: ActionArgs) {
 }
 
 export async function loader({ request }: LoaderArgs) {
-  let session = await getSession(request.headers.get("Cookie"));
+  let session = await getSession(request.headers.get("cookie"));
 
   return session.data;
 }
 
 export default function LoginPage() {
-  const data = useLoaderData<typeof loader>();
+  let data = useLoaderData<typeof loader>();
 
   return (
     <div className="mt-8">
-      {data?.isAdmin ? (
-        <span>Logged in!</span>
+      {data.isAdmin ? (
+        <p>You're signed in!</p>
       ) : (
         <Form method="post">
           <input
             className="text-gray-900"
-            placeholder="email"
-            name="email"
             type="email"
+            name="email"
+            placeholder="Email"
           />
           <input
             className="text-gray-900"
-            placeholder="password"
-            name="password"
             type="password"
+            name="password"
+            placeholder="Password"
           />
-          <button>Log in</button>
+          <button className="bg-blue-500 px-3 py-2 font-medium text-white">
+            Log in
+          </button>
         </Form>
       )}
     </div>
