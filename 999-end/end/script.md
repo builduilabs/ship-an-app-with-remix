@@ -1,35 +1,20 @@
-```tsx
-<div className="mt-8">
-  <Form method="post" onSubmit={handleDelete}>
-    <button
-      name="_action"
-      value="delete"
-      className="text-gray-500 underline"
-    >
-      Delete this entry...
-    </button>
-  </Form>
-</div>
+## Outline
+
+- Customize UI
+
+  - Hide Edit link
+  - But, can visit /edit. Need to hide the route. 404 it.
+
+- Are we done? Show that actions need to be secured.
+  - Replay curl delete, change URL.
+
+```
+curl 'http://localhost:3000/entries/31/edit?_data=routes%2Fentries.%24entryId.edit' \
+  --data-raw '_action=delete'
 ```
 
-```tsx
-let { _action, date, type, text } = Object.fromEntries(formData);
+- So, need to secure actions.
+  - Secure DELETE action, try to replay it
+- Then same pattern for CREATE and EDIT.
 
-  if (_action === "delete") {
-    await db.entry.delete({
-      where: {
-        id: +params.entryId,
-      },
-    });
-
-    return redirect("/");
-  } else {
-```
-
-```tsx
-function handleDelete(event: FormEvent<HTMLFormElement>) {
-  if (!confirm("Are you sure?")) {
-    event.preventDefault();
-  }
-}
-```
+- Error boundary & UI
