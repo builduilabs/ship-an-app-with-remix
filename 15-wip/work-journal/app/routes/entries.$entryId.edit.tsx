@@ -7,19 +7,22 @@ import { getSession } from "~/session";
 
 export async function loader({ params, request }: LoaderArgs) {
   if (typeof params.entryId !== "string") {
-    throw new Response("Not found", { status: 404 });
+    throw new Response("Not found", { status: 404, statusText: "Not found" });
   }
 
   let db = new PrismaClient();
   let entry = await db.entry.findUnique({ where: { id: +params.entryId } });
 
   if (!entry) {
-    throw new Response("Not found", { status: 404 });
+    throw new Response("Not found", { status: 404, statusText: "Not found" });
   }
 
   let session = await getSession(request.headers.get("cookie"));
   if (!session.data.isAdmin) {
-    throw new Response("Not authenticated", { status: 401 });
+    throw new Response("Not authenticated", {
+      status: 401,
+      statusText: "Not authenticated",
+    });
   }
 
   return {
@@ -31,11 +34,14 @@ export async function loader({ params, request }: LoaderArgs) {
 export async function action({ request, params }: ActionArgs) {
   let session = await getSession(request.headers.get("cookie"));
   if (!session.data.isAdmin) {
-    throw new Response("Not authenticated", { status: 401 });
+    throw new Response("Not authenticated", {
+      status: 401,
+      statusText: "Not authenticated",
+    });
   }
 
   if (typeof params.entryId !== "string") {
-    throw new Response("Not found", { status: 404 });
+    throw new Response("Not found", { status: 404, statusText: "Not found" });
   }
 
   let db = new PrismaClient();

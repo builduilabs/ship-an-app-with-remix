@@ -14,7 +14,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 
 import stylesheet from "~/tailwind.css";
@@ -80,6 +82,36 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary() {
+  let error = useRouteError();
+  console.error(error);
+
+  return (
+    <html lang="en" className="h-full">
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="flex h-full flex-col items-center justify-center">
+        <p className="text-3xl">Whoops!</p>
+
+        {isRouteErrorResponse(error) ? (
+          <p>
+            {error.status} – {error.statusText}
+          </p>
+        ) : error instanceof Error ? (
+          <p>{error.message}</p>
+        ) : (
+          <p>Something happened.</p>
+        )}
+
+        <Scripts />
       </body>
     </html>
   );

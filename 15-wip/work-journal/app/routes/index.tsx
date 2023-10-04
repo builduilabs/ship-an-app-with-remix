@@ -8,7 +8,10 @@ import { getSession } from "~/session";
 export async function action({ request }: ActionArgs) {
   let session = await getSession(request.headers.get("cookie"));
   if (!session.data.isAdmin) {
-    throw new Response("Not authenticated", { status: 401 });
+    throw new Response("Not authenticated", {
+      status: 401,
+      statusText: "Not authenticated",
+    });
   }
 
   let db = new PrismaClient();
