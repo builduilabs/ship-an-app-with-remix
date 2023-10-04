@@ -3,10 +3,11 @@ import { redirect, type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import type { FormEvent } from "react";
 import EntryForm from "~/components/entry-form";
+import { getSession } from "~/session";
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderArgs) {
   if (typeof params.entryId !== "string") {
-    throw new Response("Not found", { status: 404 });
+    throw new Response("Not found", { status: 404, statusText: "Not found" });
   }
 
   let db = new PrismaClient();
@@ -16,6 +17,14 @@ export async function loader({ params }: LoaderArgs) {
     throw new Response("Not found", { status: 404 });
   }
 
+  let session = await getSession(request.headers.get("cookie"));
+  if (!session.data.isAdmin) {
+    throw new Response("Not authenticated", {
+      status: 401,
+      statusText: "Not authorized",
+    });
+  }
+
   return {
     ...entry,
     date: entry.date.toISOString().substring(0, 10),
@@ -23,6 +32,11 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 export async function action({ request, params }: ActionArgs) {
+  let session = await getSession(request.headers.get("cookie"));
+  if (!session.data.isAdmin) {
+    throw new Response("Not authorized", { status: 401 });
+  }
+
   if (typeof params.entryId !== "string") {
     throw new Response("Not found", { status: 404 });
   }
