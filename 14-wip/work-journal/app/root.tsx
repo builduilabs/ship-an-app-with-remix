@@ -3,7 +3,7 @@ import {
   type ActionArgs,
   type LinksFunction,
   type MetaFunction,
-  LoaderArgs,
+  type LoaderArgs,
 } from "@remix-run/node";
 import {
   Form,
