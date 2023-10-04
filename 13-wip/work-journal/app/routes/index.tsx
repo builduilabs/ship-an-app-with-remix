@@ -96,7 +96,11 @@ export default function Index() {
                   <p>Work</p>
                   <ul className="ml-8 list-disc">
                     {week.work.map((entry) => (
-                      <EntryListItem key={entry.id} entry={entry} />
+                      <EntryListItem
+                        key={entry.id}
+                        entry={entry}
+                        canEdit={session.isAdmin}
+                      />
                     ))}
                   </ul>
                 </div>
@@ -106,7 +110,11 @@ export default function Index() {
                   <p>Learning</p>
                   <ul className="ml-8 list-disc">
                     {week.learnings.map((entry) => (
-                      <EntryListItem key={entry.id} entry={entry} />
+                      <EntryListItem
+                        key={entry.id}
+                        entry={entry}
+                        canEdit={session.isAdmin}
+                      />
                     ))}
                   </ul>
                 </div>
@@ -116,7 +124,11 @@ export default function Index() {
                   <p>Interesting things</p>
                   <ul className="ml-8 list-disc">
                     {week.interestingThings.map((entry) => (
-                      <EntryListItem key={entry.id} entry={entry} />
+                      <EntryListItem
+                        key={entry.id}
+                        entry={entry}
+                        canEdit={session.isAdmin}
+                      />
                     ))}
                   </ul>
                 </div>
@@ -131,19 +143,23 @@ export default function Index() {
 
 function EntryListItem({
   entry,
+  canEdit,
 }: {
   entry: Awaited<ReturnType<typeof loader>>["entries"][number];
+  canEdit: boolean;
 }) {
   return (
     <li className="group">
       {entry.text}
 
-      <Link
-        to={`/entries/${entry.id}/edit`}
-        className="ml-2 text-blue-500 opacity-0 group-hover:opacity-100"
-      >
-        Edit
-      </Link>
+      {canEdit && (
+        <Link
+          to={`/entries/${entry.id}/edit`}
+          className="ml-2 text-blue-500 opacity-0 group-hover:opacity-100"
+        >
+          Edit
+        </Link>
+      )}
     </li>
   );
 }
