@@ -35,6 +35,24 @@ useActionData good - doesn't survive reload.
 
 `actionData === "Bad credentials"` is brittle. Return a richer object.
 
+```tsx
+let error;
+
+if (!email) {
+  error = "Email can't be blank.";
+} else if (!password) {
+  error = "Password can't be blank.";
+} else {
+  error = "Invalid login.";
+}
+
+return json({ error }, 401);
+```
+
+Libraries that have thought about structuring the error object, render errors in local fields etc.
+
+Handling errors locally vs. globally / short-circuit.
+
 ## Rest
 
 - Polish
