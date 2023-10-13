@@ -1,201 +1,75 @@
-# Script
+## Outline (Building a Work Journal with Remix)
 
-## Step: Login route
+### Error in login form
 
-Add login route:
+- Isn't this an error? Let's throw.
 
 ```tsx
-import { Form } from "@remix-run/react";
+throw new Response("Bad credentials", {
+  status: 401,
+  statusText: "Bad credentials",
+});
+```
 
-export default function LoginPage() {
-  let isAdmin = false;
+Handling..but sucks. People mistype email all the time.
 
-  return (
-    <div className="mt-8">
-      {isAdmin ? (
-        <span>Logged in!</span>
-      ) : (
-        <Form method="post">
-          <input
-            className="text-gray-900"
-            placeholder="email"
-            name="email"
-            type="email"
-          />
-          <input
-            className="text-gray-900"
-            placeholder="password"
-            name="password"
-            type="password"
-          />
-          <button>Log in</button>
-        </Form>
-      )}
-    </div>
+Return the response instead, and useActionData to update UI:
+
+```tsx
+let actionData = useActionData<typeof action>();
+
+console.log(actionData);
+```
+
+Now update UI:
+
+```tsx
+{
+  actionData === "Bad credentials" && (
+    <p className="mt-4 font-medium text-red-500">Invalid login.</p>
   );
 }
 ```
 
-## Step: Action + actionData
+useActionData good - doesn't survive reload.
 
-Create an action
+`actionData === "Bad credentials"` is brittle. Return a richer object.
 
 ```tsx
-export async function action({ request }: ActionArgs) {
-  let formData = await request.formData();
-  let { email, password } = Object.fromEntries(formData);
+let error;
 
-  if (email === "sam@buildui.com" && password === "password") {
-    return { isAdmin: true };
-  } else {
-    return { isAdmin: false };
-  }
+if (!email) {
+  error = "Email can't be blank.";
+} else if (!password) {
+  error = "Password can't be blank.";
+} else {
+  error = "Invalid login.";
 }
+
+return json({ error }, 401);
 ```
 
-then use action data
+then in our JSX:
 
 ```tsx
-const data = useActionData<typeof action>();
-data?.isAdmin
+{actionData?.error && (
+  <p className="mt-4 font-medium text-red-500">{actionData.error}</p>
+)}
 ```
 
-Problem: doesn't survive reloads! HTTP is stateless. Need data that's durable that we can associate with subsequent HTTP requests.
+Libraries that have thought about structuring the error object, render errors in local fields etc.
 
-Solution: This is where Sessions come in.
+Handling errors locally vs. globally / short-circuit.
 
-## Step: Cookies
+## Rest
 
-```tsx
-if (email === "sam@buildui.com" && password === "password") {
-  return new Response("", {
-    headers: {
-      "Set-Cookie": "admin=1",
-    },
-  });
-}
-```
+- Polish
 
-```tsx
-export async function loader({ request }: LoaderArgs) {
-  let admin = request.headers.get("Cookie")?.split("=")[1];
+- Deploy
 
-  return { isAdmin: admin === "1" };
-}
-```
-
-```tsx
-const data = useLoaderData<typeof loader>();
-data?.isAdmin
-```
-
-Works!
-
-Problem: wiring/parsing/encoding, but also insecure (set admin: true)
-
-## Step: createCookieSessionStorage
-
-```tsx
-const storage = createCookieSessionStorage({
-  cookie: {
-    name: "work-journal-session",
-    // secrets: ["build-ui-secret"],
-    // sameSite: "lax",
-    // path: "/",
-    // maxAge: 60 * 60 * 24 * 30,
-    // httpOnly: true,
-    // secure: process.env.NODE_ENV === "production",
-  },
-});
-
-let session = await storage.getSession();
-session.set("isAdmin", true);
-return new Response("", {
-  headers: { "Set-Cookie": await storage.commitSession(session) },
-});
-```
-
-Look in browser - there it is! Base64 encoded to prevent transmission problems – let's decode it with atob (ascii to binary):
-
-`atob("eyJpc0FkbWluIjp0cnVlfQ==")`
-
-There it is!
-
-Now, read from storage in loader:
-
-```tsx
-export async function loader({ request }: LoaderArgs) {
-  const storage = createCookieSessionStorage({
-    cookie: {
-      name: "work-journal-session",
-      // secrets: ["build-ui-secret"],
-      // sameSite: "lax",
-      // path: "/",
-      // maxAge: 60 * 60 * 24 * 30,
-      // httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-    },
-  });
-  let session = await storage.getSession(request.headers.get("Cookie"));
-  console.log(session.data);
-  return session.data;
-}
-```
-
-Awesome!
-
-## Step: Extract
-
-```tsx
-// app/session.ts
-import { createCookieSessionStorage } from "@remix-run/node";
-
-export const { getSession, commitSession, destroySession } =
-  createCookieSessionStorage({
-    cookie: {
-      name: "work-journal-session",
-      secrets: ["build-ui-secret"],
-
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    },
-  });
+- Upgrade to v2
+  - Remix philosophy. Upgrade to last of current version, enable all flags, run tests (lol), then upgrade majors.
 
 ```
 
-Then secret (warning in dev console)
-
-Then rest of options.
-
-## Step: Redirect
-
-```tsx
-return redirect("/", {
-  headers: { "Set-Cookie": await commitSession(session) },
-});
 ```
-
-## Step: Use on homepage
-
-```tsx
-export async function loader({ request }: LoaderArgs) {
-  let session = await getSession(request.headers.get("Cookie"));
-  let db = new PrismaClient();
-  let entries = await db.entry.findMany();
-
-  return {
-    session: session.data,
-    entries: entries.map((entry) => ({
-      ...entry,
-      date: entry.date.toISOString().substring(0, 10),
-    })),
-  };
-}
-```
-
-Update type in component.
-
-Use in page to conditionally render form.

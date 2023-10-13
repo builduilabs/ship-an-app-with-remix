@@ -1,5 +1,3 @@
-## Outline (Building a Work Journal with Remix)
-
 ### Error in login form
 
 - Isn't this an error? Let's throw.
@@ -49,19 +47,16 @@ if (!email) {
 return json({ error }, 401);
 ```
 
+then in our JSX:
+
+```tsx
+{
+  actionData?.error && (
+    <p className="mt-4 font-medium text-red-500">{actionData.error}</p>
+  );
+}
+```
+
 Libraries that have thought about structuring the error object, render errors in local fields etc.
 
 Handling errors locally vs. globally / short-circuit.
-
-## Rest
-
-- Polish
-
-- Deploy
-
-- Upgrade to v2
-  - Remix philosophy. Upgrade to last of current version, enable all flags, run tests (lol), then upgrade majors.
-
-```
-
-```
