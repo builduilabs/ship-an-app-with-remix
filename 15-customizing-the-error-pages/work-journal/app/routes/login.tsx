@@ -1,10 +1,5 @@
-import {
-  type LoaderArgs,
-  type ActionArgs,
-  redirect,
-  json,
-} from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { type LoaderArgs, type ActionArgs, redirect } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/session";
 
 export async function action({ request }: ActionArgs) {
@@ -21,17 +16,7 @@ export async function action({ request }: ActionArgs) {
       },
     });
   } else {
-    let error;
-
-    if (!email) {
-      error = "Email can't be blank.";
-    } else if (!password) {
-      error = "Password can't be blank.";
-    } else {
-      error = "Invalid login.";
-    }
-
-    return json({ error }, 401);
+    return null;
   }
 }
 
@@ -43,7 +28,6 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function LoginPage() {
   let data = useLoaderData<typeof loader>();
-  let actionData = useActionData<typeof action>();
 
   return (
     <div className="mt-8">
@@ -52,14 +36,12 @@ export default function LoginPage() {
       ) : (
         <Form method="post">
           <input
-            required
             className="text-gray-900"
             type="email"
             name="email"
             placeholder="Email"
           />
           <input
-            required
             className="text-gray-900"
             type="password"
             name="password"
@@ -68,10 +50,6 @@ export default function LoginPage() {
           <button className="bg-blue-500 px-3 py-2 font-medium text-white">
             Log in
           </button>
-
-          {actionData?.error && (
-            <p className="mt-4 font-medium text-red-500">{actionData.error}</p>
-          )}
         </Form>
       )}
     </div>
