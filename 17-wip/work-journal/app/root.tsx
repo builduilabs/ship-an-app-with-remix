@@ -83,7 +83,7 @@ export default function App() {
                 Work Journal
               </h1>
 
-              <p className="mt-5 text-lg tracking-tight text-gray-400">
+              <p className="mt-5 text-lg tracking-tight">
                 Doings and learnings. Updated weekly.
               </p>
             </div>

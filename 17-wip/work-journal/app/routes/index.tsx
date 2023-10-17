@@ -42,7 +42,7 @@ export async function loader({ request }: LoaderArgs) {
   let session = await getSession(request.headers.get("cookie"));
 
   let db = new PrismaClient();
-  let entries = await db.entry.findMany();
+  let entries = await db.entry.findMany({ orderBy: { date: "desc" } });
 
   return {
     session: session.data,
@@ -71,18 +71,16 @@ export default function Index() {
     {}
   );
 
-  let weeks = Object.keys(entriesByWeek)
-    .sort((a, b) => a.localeCompare(b))
-    .map((dateString) => ({
-      dateString,
-      work: entriesByWeek[dateString].filter((entry) => entry.type === "work"),
-      learnings: entriesByWeek[dateString].filter(
-        (entry) => entry.type === "learning"
-      ),
-      interestingThings: entriesByWeek[dateString].filter(
-        (entry) => entry.type === "interesting-thing"
-      ),
-    }));
+  let weeks = Object.keys(entriesByWeek).map((dateString) => ({
+    dateString,
+    work: entriesByWeek[dateString].filter((entry) => entry.type === "work"),
+    learnings: entriesByWeek[dateString].filter(
+      (entry) => entry.type === "learning"
+    ),
+    interestingThings: entriesByWeek[dateString].filter(
+      (entry) => entry.type === "interesting-thing"
+    ),
+  }));
 
   return (
     <div>
@@ -94,12 +92,12 @@ export default function Index() {
         </div>
       )}
 
-      <div className="relative mt-14 space-y-16 border-l border-sky-500/25 pl-6">
+      <div className="relative mt-14 space-y-16 border-l-2 border-sky-500/10 pl-5">
         {weeks.map((week) => (
           <div key={week.dateString} className="">
-            <div className="absolute -left-[7px] h-[14px] w-[14px] rounded-full border border-sky-500/25 bg-gray-900"></div>
+            <div className="absolute -left-[7px] h-[12px] w-[12px] rounded-full border border-sky-500 bg-gray-900" />
 
-            <p className="mb-3 pb-3 text-xs font-semibold leading-[14px] text-sky-500">
+            <p className="mb-3 pb-3 text-xs font-semibold leading-[12px] text-sky-500">
               {format(parseISO(week.dateString), "MMMM d, yyyy")}
             </p>
             {/* <p className="mb-3 border-b border-sky-500/50 pb-3 text-sm font-medium text-sky-500">
@@ -108,7 +106,7 @@ export default function Index() {
             {/* <p className="text-xs font-bold uppercase tracking-wider text-sky-500">
               {format(parseISO(week.dateString), "MMM d yyyy")}
             </p> */}
-            <div className="mt-3 space-y-4">
+            <div className="mt-3 space-y-6">
               <EntryList label="Work" entries={week.work} />
               <EntryList label="Learnings" entries={week.learnings} />
               <EntryList
@@ -130,9 +128,9 @@ function EntryList({ label, entries }: { label: string; entries: Entry[] }) {
 
   return (
     <div>
-      <p className="font-bold text-gray-100">{label}</p>
+      <p className="font-semibold tracking-tight text-gray-100">{label}</p>
 
-      <ul className="mt-4 ml-4 list-disc">
+      <ul className="mt-2 ml-4 list-disc">
         {entries.map((entry) => (
           <EntryListItem key={entry.id} entry={entry} />
         ))}

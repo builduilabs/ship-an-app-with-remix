@@ -99,6 +99,16 @@ html {
 </body>
 ```
 
+## Index
+
+- Sort entries reverse chronological
+
+Sort in loader (remove .sort)
+
+```tsx
+let entries = await db.entry.findMany({ orderBy: { date: "desc" } });
+```
+
 ## Next
 
-- Copy styles from my work journal
+- 
