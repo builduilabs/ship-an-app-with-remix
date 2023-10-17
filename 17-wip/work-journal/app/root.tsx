@@ -24,6 +24,7 @@ import { destroySession, getSession } from "./session";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: "/fonts/inter/inter.css" },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -58,15 +59,13 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="p-10">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-5xl">Work Journal</h1>
-              <p className="mt-2 text-lg text-gray-400">
-                Learnings and doings. Updated weekly.
-              </p>
-            </div>
+        <header className="flex justify-between px-4 pt-4 text-sm">
+          <a className="font-light uppercase" href="https://samselikoff.com/">
+            <span className="text-gray-400">Sam</span>
+            <span className="font-bold">Selikoff</span>
+          </a>
 
+          <div className="font-medium text-gray-500">
             {session.isAdmin ? (
               <Form method="post">
                 <button>Logout</button>
@@ -74,6 +73,20 @@ export default function App() {
             ) : (
               <Link to="/login">Login</Link>
             )}
+          </div>
+        </header>
+
+        <div className="px-4 py-12">
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-5xl font-semibold tracking-tighter text-white">
+                Work Journal
+              </h1>
+
+              <p className="mt-5 text-lg tracking-tight text-gray-400">
+                Doings and learnings. Updated weekly.
+              </p>
+            </div>
           </div>
 
           <Outlet />

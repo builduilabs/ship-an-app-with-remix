@@ -53,6 +53,8 @@ export async function loader({ request }: LoaderArgs) {
   };
 }
 
+type Entry = Awaited<ReturnType<typeof loader>>["entries"][number];
+
 export default function Index() {
   let { session, entries } = useLoaderData<typeof loader>();
 
@@ -85,62 +87,34 @@ export default function Index() {
   return (
     <div>
       {session.isAdmin && (
-        <div className="my-8 border p-3">
-          <p className="italic">Create a new entry</p>
+        <div className="my-8 rounded-md border border-gray-500 p-3">
+          <p className="text-sm font-medium">New entry</p>
 
           <EntryForm />
         </div>
       )}
 
-      <div className="mt-12 space-y-12">
+      <div className="relative mt-14 space-y-16 border-l border-sky-500/25 pl-6">
         {weeks.map((week) => (
-          <div key={week.dateString}>
-            <p className="font-bold">
-              Week of {format(parseISO(week.dateString), "MMMM do")}
+          <div key={week.dateString} className="">
+            <div className="absolute -left-[7px] h-[14px] w-[14px] rounded-full border border-sky-500/25 bg-gray-900"></div>
+
+            <p className="mb-3 pb-3 text-xs font-semibold leading-[14px] text-sky-500">
+              {format(parseISO(week.dateString), "MMMM d, yyyy")}
             </p>
+            {/* <p className="mb-3 border-b border-sky-500/50 pb-3 text-sm font-medium text-sky-500">
+              {format(parseISO(week.dateString), "MMMM d, yyyy")}
+            </p> */}
+            {/* <p className="text-xs font-bold uppercase tracking-wider text-sky-500">
+              {format(parseISO(week.dateString), "MMM d yyyy")}
+            </p> */}
             <div className="mt-3 space-y-4">
-              {week.work.length > 0 && (
-                <div>
-                  <p>Work</p>
-                  <ul className="ml-8 list-disc">
-                    {week.work.map((entry) => (
-                      <EntryListItem
-                        key={entry.id}
-                        entry={entry}
-                        canEdit={session.isAdmin}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {week.learnings.length > 0 && (
-                <div>
-                  <p>Learning</p>
-                  <ul className="ml-8 list-disc">
-                    {week.learnings.map((entry) => (
-                      <EntryListItem
-                        key={entry.id}
-                        entry={entry}
-                        canEdit={session.isAdmin}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {week.interestingThings.length > 0 && (
-                <div>
-                  <p>Interesting things</p>
-                  <ul className="ml-8 list-disc">
-                    {week.interestingThings.map((entry) => (
-                      <EntryListItem
-                        key={entry.id}
-                        entry={entry}
-                        canEdit={session.isAdmin}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <EntryList label="Work" entries={week.work} />
+              <EntryList label="Learnings" entries={week.learnings} />
+              <EntryList
+                label="Intereesting things"
+                entries={week.interestingThings}
+              />
             </div>
           </div>
         ))}
@@ -149,18 +123,32 @@ export default function Index() {
   );
 }
 
-function EntryListItem({
-  entry,
-  canEdit,
-}: {
-  entry: Awaited<ReturnType<typeof loader>>["entries"][number];
-  canEdit: boolean;
-}) {
+function EntryList({ label, entries }: { label: string; entries: Entry[] }) {
+  if (entries.length === 0) {
+    return null;
+  }
+
+  return (
+    <div>
+      <p className="font-bold text-gray-100">{label}</p>
+
+      <ul className="mt-4 ml-4 list-disc">
+        {entries.map((entry) => (
+          <EntryListItem key={entry.id} entry={entry} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function EntryListItem({ entry }: { entry: Entry }) {
+  let { session } = useLoaderData<typeof loader>();
+
   return (
     <li className="group">
       {entry.text}
 
-      {canEdit && (
+      {session.isAdmin && (
         <Link
           to={`/entries/${entry.id}/edit`}
           className="ml-2 text-blue-500 opacity-0 group-hover:opacity-100"
