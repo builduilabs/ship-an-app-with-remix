@@ -59,10 +59,10 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <header className="flex justify-between px-4 pt-4 text-sm">
+        <header className="mx-auto flex max-w-screen-xl justify-between px-4 pt-4 text-sm">
           <a className="font-light uppercase" href="https://samselikoff.com/">
-            <span className="text-gray-400">Sam</span>
-            <span className="font-bold">Selikoff</span>
+            <span className="text-gray-500">Sam</span>
+            <span className="font-semibold text-gray-400">Selikoff</span>
           </a>
 
           <div className="font-medium text-gray-500">
@@ -76,21 +76,21 @@ export default function App() {
           </div>
         </header>
 
-        <div className="px-4 py-12">
+        <main className="mx-auto max-w-2xl px-4 py-12">
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-5xl font-semibold tracking-tighter text-white">
                 Work Journal
               </h1>
 
-              <p className="mt-5 text-lg tracking-tight">
+              <p className="mt-5 text-lg tracking-tight text-gray-500">
                 Doings and learnings. Updated weekly.
               </p>
             </div>
           </div>
 
           <Outlet />
-        </div>
+        </main>
 
         <ScrollRestoration />
         <Scripts />
