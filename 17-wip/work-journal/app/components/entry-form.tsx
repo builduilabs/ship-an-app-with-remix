@@ -37,7 +37,8 @@ export default function EntryForm({
               type="date"
               name="date"
               required
-              className="w-full rounded border-transparent text-gray-900 focus:border-sky-500"
+              style={{ colorScheme: "dark" }}
+              className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-1 focus:ring-inset focus:ring-sky-600"
               defaultValue={entry?.date ?? format(new Date(), "yyyy-MM-dd")}
             />
           </div>
@@ -52,7 +53,7 @@ export default function EntryForm({
                 <input
                   required
                   type="radio"
-                  className="mr-2"
+                  className="focus:sky-600 mr-2 border-gray-700 bg-gray-800 text-sky-600 focus:ring-sky-600 focus:ring-offset-gray-900"
                   name="type"
                   value={option.value}
                   defaultChecked={option.value === (entry?.type ?? "work")}
@@ -68,7 +69,7 @@ export default function EntryForm({
             ref={textareaRef}
             placeholder="Type your entry..."
             name="text"
-            className="w-full rounded border-transparent text-gray-700"
+            className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-1 focus:ring-inset focus:ring-sky-600"
             required
             defaultValue={entry?.text}
           />
@@ -77,7 +78,7 @@ export default function EntryForm({
         <div className="mt-4 text-right">
           <button
             type="submit"
-            className="rounded bg-sky-500 px-6 py-1 font-medium text-white"
+            className="rounded-md bg-sky-600 px-4 py-1.5 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900"
           >
             {fetcher.state !== "idle" ? "Saving..." : "Save"}
           </button>

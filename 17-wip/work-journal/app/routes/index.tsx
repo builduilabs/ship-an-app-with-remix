@@ -85,7 +85,7 @@ export default function Index() {
   return (
     <div>
       {session.isAdmin && (
-        <div className="my-8 rounded-md border border-gray-700 bg-gray-800 px-4 pt-3 pb-4">
+        <div className="my-8 rounded-lg bg-gray-800/50 px-4 pt-3 pb-4 shadow-md ring-1 ring-inset ring-white/5">
           <p className="text-sm font-medium text-gray-500">New entry</p>
 
           <div className="mt-4">
@@ -145,7 +145,7 @@ function EntryListItem({ entry }: { entry: Entry }) {
       {session.isAdmin && (
         <Link
           to={`/entries/${entry.id}/edit`}
-          className="ml-2 text-blue-500 opacity-0 group-hover:opacity-100"
+          className="ml-2 text-sm font-medium text-sky-500 opacity-0 group-hover:opacity-100"
         >
           Edit
         </Link>
