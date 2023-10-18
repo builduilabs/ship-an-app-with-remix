@@ -68,10 +68,10 @@ export default function App() {
           <div className="font-medium text-gray-500">
             {session.isAdmin ? (
               <Form method="post">
-                <button>Logout</button>
+                <button>Log out</button>
               </Form>
             ) : (
-              <Link to="/login">Login</Link>
+              <Link to="/login">Log in</Link>
             )}
           </div>
         </header>
@@ -79,9 +79,15 @@ export default function App() {
         <main className="mx-auto max-w-2xl px-4 py-12">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-5xl font-semibold tracking-tighter text-white">
-                Work Journal
-              </h1>
+              <Link
+                to="/"
+                className="inline-block"
+                style={{ WebkitTapHighlightColor: "transparent" }}
+              >
+                <h1 className="text-5xl font-semibold tracking-tighter text-white">
+                  Work Journal
+                </h1>
+              </Link>
 
               <p className="mt-5 text-lg tracking-tight text-gray-500">
                 Doings and learnings. Updated weekly.

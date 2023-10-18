@@ -37,7 +37,7 @@ export default function EntryForm({
               type="date"
               name="date"
               required
-              className="text-gray-900"
+              className="w-full rounded border-transparent text-gray-900 focus:border-sky-500"
               defaultValue={entry?.date ?? format(new Date(), "yyyy-MM-dd")}
             />
           </div>
@@ -48,11 +48,11 @@ export default function EntryForm({
               { label: "Learning", value: "learning" },
               { label: "Interesting thing", value: "interesting-thing" },
             ].map((option) => (
-              <label key={option.value} className="inline-block">
+              <label key={option.value} className="inline-block text-sm">
                 <input
                   required
                   type="radio"
-                  className="mr-1"
+                  className="mr-2"
                   name="type"
                   value={option.value}
                   defaultChecked={option.value === (entry?.type ?? "work")}
@@ -62,20 +62,22 @@ export default function EntryForm({
             ))}
           </div>
         </div>
-        <div className="mt-4">
+
+        <div className="mt-6">
           <textarea
             ref={textareaRef}
             placeholder="Type your entry..."
             name="text"
-            className="w-full text-gray-700"
+            className="w-full rounded border-transparent text-gray-700"
             required
             defaultValue={entry?.text}
           />
         </div>
-        <div className="mt-2 text-right">
+
+        <div className="mt-4 text-right">
           <button
             type="submit"
-            className="bg-blue-500 px-4 py-1 font-semibold text-white"
+            className="rounded bg-sky-500 px-6 py-1 font-medium text-white"
           >
             {fetcher.state !== "idle" ? "Saving..." : "Save"}
           </button>

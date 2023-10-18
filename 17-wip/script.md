@@ -277,9 +277,52 @@ function EntryListItem({ entry }: { entry: Entry }) {
     </li>
   );
 }
-
 ```
 
-## Next
+## Login page
 
-- 
+```tsx
+export default function LoginPage() {
+  let data = useLoaderData<typeof loader>();
+  let actionData = useActionData<typeof action>();
+
+  return (
+    <div className="mt-8">
+      {data.isAdmin ? (
+        <p>You're signed in!</p>
+      ) : (
+        <Form method="post">
+          <div className="space-y-2">
+            <input
+              className="w-full rounded border-transparent text-gray-900 focus:border-sky-500"
+              type="email"
+              name="email"
+              required
+              placeholder="Email"
+            />
+            <input
+              className="w-full rounded border-transparent text-gray-900 focus:border-sky-500"
+              type="password"
+              name="password"
+              required
+              placeholder="Password"
+            />
+          </div>
+
+          <div className="mt-8">
+            <button className="w-full rounded bg-sky-500 px-3 py-2 font-medium text-white">
+              Log in
+            </button>
+          </div>
+
+          {actionData?.error && (
+            <p className="mt-4 font-medium text-red-500">{actionData.error}</p>
+          )}
+        </Form>
+      )}
+    </div>
+  );
+}
+```
+
+## Create form

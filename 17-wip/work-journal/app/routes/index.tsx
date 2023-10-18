@@ -85,10 +85,12 @@ export default function Index() {
   return (
     <div>
       {session.isAdmin && (
-        <div className="my-8 rounded-md border border-gray-500 p-3">
-          <p className="text-sm font-medium">New entry</p>
+        <div className="my-8 rounded-md border border-gray-700 bg-gray-800 px-4 pt-3 pb-4">
+          <p className="text-sm font-medium text-gray-500">New entry</p>
 
-          <EntryForm />
+          <div className="mt-4">
+            <EntryForm />
+          </div>
         </div>
       )}
 
@@ -104,7 +106,7 @@ export default function Index() {
               <EntryList label="Work" entries={week.work} />
               <EntryList label="Learnings" entries={week.learnings} />
               <EntryList
-                label="Intereesting things"
+                label="Interesting things"
                 entries={week.interestingThings}
               />
             </div>
