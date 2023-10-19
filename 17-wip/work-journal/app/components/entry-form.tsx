@@ -81,7 +81,7 @@ export default function EntryForm({
         <div className="mt-4 text-right">
           <button
             type="submit"
-            className="rounded-md bg-sky-600 px-4 py-1.5 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className="rounded-md bg-sky-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900"
           >
             {fetcher.state !== "idle" ? "Saving..." : "Save"}
           </button>

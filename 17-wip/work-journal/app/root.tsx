@@ -68,7 +68,7 @@ export default function App() {
             <span className="font-semibold text-gray-200">Selikoff</span>
           </a>
 
-          <div className="text-sm font-medium text-gray-500">
+          <div className="text-sm font-medium text-gray-500 hover:text-gray-200">
             {session.isAdmin ? (
               <Form method="post">
                 <button>Log out</button>
