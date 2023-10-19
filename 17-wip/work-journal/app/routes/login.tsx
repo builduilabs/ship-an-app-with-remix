@@ -46,33 +46,28 @@ export default function LoginPage() {
   let actionData = useActionData<typeof action>();
 
   return (
-    <div className="mx-auto mt-8 max-w-sm lg:mt-20">
+    <div className="mt-8">
       {data.isAdmin ? (
         <p>You're signed in!</p>
       ) : (
         <Form method="post">
-          <div className="space-y-2">
-            <input
-              className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-1 focus:ring-inset focus:ring-sky-600"
-              type="email"
-              name="email"
-              required
-              placeholder="Email"
-            />
-            <input
-              className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-inset focus:ring-sky-600"
-              type="password"
-              name="password"
-              required
-              placeholder="Password"
-            />
-          </div>
-
-          <div className="mt-8">
-            <button className="w-full rounded-md bg-sky-600 px-3 py-2 font-medium text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900">
-              Log in
-            </button>
-          </div>
+          <input
+            className="text-gray-900"
+            type="email"
+            name="email"
+            required
+            placeholder="Email"
+          />
+          <input
+            className="text-gray-900"
+            type="password"
+            name="password"
+            required
+            placeholder="Password"
+          />
+          <button className="bg-blue-500 px-3 py-2 font-medium text-white">
+            Log in
+          </button>
 
           {actionData?.error && (
             <p className="mt-4 font-medium text-red-500">{actionData.error}</p>

@@ -24,7 +24,6 @@ import { destroySession, getSession } from "./session";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
-  { rel: "stylesheet", href: "/fonts/inter/inter.css" },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -58,39 +57,27 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="mx-auto max-w-xl px-4 lg:max-w-7xl">
-        <header className="mx-auto flex max-w-screen-xl items-center justify-between pt-4 lg:border-b lg:border-gray-800 lg:py-5">
-          <a
-            className="text-sm uppercase lg:text-lg"
-            href="https://samselikoff.com/"
-          >
-            <span className="text-gray-500">Sam</span>
-            <span className="font-semibold text-gray-200">Selikoff</span>
-          </a>
+      <body>
+        <div className="p-10">
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-5xl">Work Journal</h1>
+              <p className="mt-2 text-lg text-gray-400">
+                Learnings and doings. Updated weekly.
+              </p>
+            </div>
 
-          <div className="text-sm font-medium text-gray-500 hover:text-gray-200">
             {session.isAdmin ? (
               <Form method="post">
-                <button>Log out</button>
+                <button>Logout</button>
               </Form>
             ) : (
-              <Link to="/login">Log in</Link>
+              <Link to="/login">Login</Link>
             )}
-          </div>
-        </header>
-
-        <main className="mx-auto max-w-2xl py-12 lg:max-w-3xl lg:py-20">
-          <div className="mt-8 mb-20">
-            <h1 className="text-center text-5xl font-semibold tracking-tighter text-white lg:text-7xl">
-              <Link to="/">Work Journal</Link>
-            </h1>
-            <p className="mt-2 text-center tracking-tight text-gray-500 lg:mt-4 lg:text-2xl">
-              Doings and learnings. Updated weekly.
-            </p>
           </div>
 
           <Outlet />
-        </main>
+        </div>
 
         <ScrollRestoration />
         <Scripts />

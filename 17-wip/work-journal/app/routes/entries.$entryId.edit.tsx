@@ -50,7 +50,7 @@ export async function action({ request, params }: ActionArgs) {
 
   let { _action, date, type, text } = Object.fromEntries(formData);
 
-  await new Promise((resolve) => setTimeout(resolve, 250));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   if (_action === "delete") {
     await db.entry.delete({
@@ -94,15 +94,11 @@ export default function EditPage() {
   }
 
   return (
-    <div className="mt-6">
-      <div className="my-8 rounded-lg bg-gray-800/50 p-4 shadow-md ring-1 ring-inset ring-white/5 lg:p-6">
-        <p className="text-sm font-medium text-gray-500 lg:text-base">
-          Edit entry
-        </p>
+    <div className="mt-4">
+      <p>Editing entry {entry.id}</p>
 
-        <div className="mt-4">
-          <EntryForm entry={entry} />
-        </div>
+      <div className="mt-8">
+        <EntryForm entry={entry} />
       </div>
 
       <div className="mt-8">
@@ -110,7 +106,7 @@ export default function EditPage() {
           <button
             name="_action"
             value="delete"
-            className="text-sm text-gray-600 underline"
+            className="text-gray-500 underline"
           >
             Delete this entry...
           </button>
