@@ -31,8 +31,8 @@ export default function EntryForm({
         className="disabled:opacity-70"
         disabled={fetcher.state !== "idle"}
       >
-        <div>
-          <div>
+        <div className="items-center lg:flex lg:justify-between">
+          <div className="lg:order-2">
             <input
               type="date"
               name="date"
@@ -43,13 +43,16 @@ export default function EntryForm({
             />
           </div>
 
-          <div className="mt-4 space-x-4">
+          <div className="mt-4 space-x-4 lg:mt-0 lg:space-x-6">
             {[
               { label: "Work", value: "work" },
               { label: "Learning", value: "learning" },
               { label: "Interesting thing", value: "interesting-thing" },
             ].map((option) => (
-              <label key={option.value} className="inline-block text-sm">
+              <label
+                key={option.value}
+                className="inline-block text-sm text-white lg:text-base"
+              >
                 <input
                   required
                   type="radio"
@@ -64,7 +67,7 @@ export default function EntryForm({
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 lg:mt-8">
           <textarea
             ref={textareaRef}
             placeholder="Type your entry..."

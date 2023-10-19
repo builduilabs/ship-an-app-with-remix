@@ -58,14 +58,17 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <header className="mx-auto flex max-w-screen-xl justify-between px-4 pt-4 text-sm">
-          <a className="font-light uppercase" href="https://samselikoff.com/">
+      <body className="mx-auto max-w-xl px-4 lg:max-w-7xl">
+        <header className="mx-auto flex max-w-screen-xl items-center justify-between pt-4 lg:border-b lg:border-gray-800 lg:py-5">
+          <a
+            className="text-sm uppercase lg:text-lg"
+            href="https://samselikoff.com/"
+          >
             <span className="text-gray-500">Sam</span>
-            <span className="font-semibold text-gray-400">Selikoff</span>
+            <span className="font-semibold text-gray-200">Selikoff</span>
           </a>
 
-          <div className="font-medium text-gray-500">
+          <div className="text-sm font-medium text-gray-500">
             {session.isAdmin ? (
               <Form method="post">
                 <button>Log out</button>
@@ -76,23 +79,14 @@ export default function App() {
           </div>
         </header>
 
-        <main className="mx-auto max-w-2xl px-4 py-12">
-          <div className="flex items-start justify-between">
-            <div>
-              <Link
-                to="/"
-                className="inline-block"
-                style={{ WebkitTapHighlightColor: "transparent" }}
-              >
-                <h1 className="text-5xl font-semibold tracking-tighter text-white">
-                  Work Journal
-                </h1>
-              </Link>
-
-              <p className="mt-5 text-lg tracking-tight text-gray-500">
-                Doings and learnings. Updated weekly.
-              </p>
-            </div>
+        <main className="mx-auto max-w-2xl py-12 lg:max-w-3xl lg:py-20">
+          <div className="mt-8 mb-20">
+            <h1 className="text-center text-5xl font-semibold tracking-tighter text-white lg:text-7xl">
+              <Link to="/">Work Journal</Link>
+            </h1>
+            <p className="mt-2 text-center tracking-tight text-gray-500 lg:mt-4 lg:text-2xl">
+              Doings and learnings. Updated weekly.
+            </p>
           </div>
 
           <Outlet />

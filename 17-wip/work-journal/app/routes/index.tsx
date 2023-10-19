@@ -85,8 +85,10 @@ export default function Index() {
   return (
     <div>
       {session.isAdmin && (
-        <div className="my-8 rounded-lg bg-gray-800/50 px-4 pt-3 pb-4 shadow-md ring-1 ring-inset ring-white/5">
-          <p className="text-sm font-medium text-gray-500">New entry</p>
+        <div className="my-8 rounded-lg bg-gray-800/50 p-4 shadow-md ring-1 ring-inset ring-white/5 lg:p-6">
+          <p className="text-sm font-medium text-gray-500 lg:text-base">
+            New entry
+          </p>
 
           <div className="mt-4">
             <EntryForm />
@@ -94,15 +96,17 @@ export default function Index() {
         </div>
       )}
 
-      <div className="relative mt-14 space-y-16 border-l-2 border-sky-500/[.15] pl-5">
+      <div className="relative mt-14 space-y-16 border-l-2 border-sky-500/[.15] pl-5 lg:mt-24 lg:space-y-20 lg:pl-8">
         {weeks.map((week) => (
-          <div key={week.dateString} className="">
-            <div className="absolute -left-[6px] h-[10px] w-[10px] rounded-full border border-sky-500 bg-gray-900" />
+          <div key={week.dateString}>
+            <div className="absolute left-[-12px] rounded-full bg-gray-900 p-1.5">
+              <div className="h-[10px] w-[10px] rounded-full border border-sky-500 bg-gray-900" />
+            </div>
 
-            <p className="mb-3 pb-3 text-xs font-semibold uppercase leading-[11px] tracking-wider text-sky-500">
+            <p className="mb-3 pb-3 text-xs font-semibold uppercase leading-[22px] tracking-wider text-sky-500 lg:text-sm lg:leading-[24px]">
               {format(parseISO(week.dateString), "MMMM d, yyyy")}
             </p>
-            <div className="mt-3 space-y-6">
+            <div className="mt-3 space-y-8 lg:space-y-12">
               <EntryList label="Work" entries={week.work} />
               <EntryList label="Learnings" entries={week.learnings} />
               <EntryList
@@ -124,9 +128,9 @@ function EntryList({ label, entries }: { label: string; entries: Entry[] }) {
 
   return (
     <div>
-      <p className="text-[15px] font-semibold text-gray-100">{label}</p>
+      <p className="text-sm font-semibold text-gray-50 lg:text-base">{label}</p>
 
-      <ul className="mt-2 ml-4 list-disc">
+      <ul className="mt-2 ml-4 list-disc space-y-2">
         {entries.map((entry) => (
           <EntryListItem key={entry.id} entry={entry} />
         ))}

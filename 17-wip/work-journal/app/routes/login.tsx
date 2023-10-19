@@ -46,7 +46,7 @@ export default function LoginPage() {
   let actionData = useActionData<typeof action>();
 
   return (
-    <div className="mt-8">
+    <div className="mx-auto mt-8 max-w-sm lg:mt-20">
       {data.isAdmin ? (
         <p>You're signed in!</p>
       ) : (
