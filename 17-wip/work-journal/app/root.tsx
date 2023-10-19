@@ -24,6 +24,7 @@ import { destroySession, getSession } from "./session";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: "/fonts/inter/inter.css" },
 ];
 
 export const meta: MetaFunction = () => ({
@@ -57,27 +58,41 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <div className="p-10">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-5xl">Work Journal</h1>
-              <p className="mt-2 text-lg text-gray-400">
-                Learnings and doings. Updated weekly.
-              </p>
-            </div>
+      <body className="mx-auto max-w-xl p-4 lg:max-w-7xl">
+        <header>
+          <div className="flex items-center justify-between lg:border-b lg:border-gray-800 lg:pt-1 lg:pb-5">
+            <p className="text-sm uppercase lg:text-lg">
+              <span className="text-gray-500">Sam</span>
+              <span className="font-semibold text-gray-200">Selikoff</span>
+            </p>
 
-            {session.isAdmin ? (
-              <Form method="post">
-                <button>Logout</button>
-              </Form>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
+            <div className="text-sm font-medium text-gray-500 hover:text-gray-200">
+              {session.isAdmin ? (
+                <Form method="post">
+                  <button>Log out</button>
+                </Form>
+              ) : (
+                <Link to="/login">Log in</Link>
+              )}
+            </div>
           </div>
 
+          <div className="my-20 lg:my-28">
+            <div className="text-center">
+              <h1 className="text-5xl font-semibold tracking-tighter text-white lg:text-7xl">
+                <Link to="/">Work Journal</Link>
+              </h1>
+
+              <p className="mt-2 tracking-tight text-gray-500 lg:mt-4 lg:text-2xl">
+                Doings and learnings. Updated weekly.
+              </p>
+            </div>
+          </div>
+        </header>
+
+        <main className="mx-auto max-w-3xl">
           <Outlet />
-        </div>
+        </main>
 
         <ScrollRestoration />
         <Scripts />
