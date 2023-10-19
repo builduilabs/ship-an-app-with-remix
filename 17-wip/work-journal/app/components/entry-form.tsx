@@ -75,6 +75,7 @@ export default function EntryForm({
             className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-1 focus:ring-inset focus:ring-sky-600"
             required
             defaultValue={entry?.text}
+            rows={3}
           />
         </div>
 

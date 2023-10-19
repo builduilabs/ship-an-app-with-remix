@@ -128,9 +128,9 @@ function EntryList({ label, entries }: { label: string; entries: Entry[] }) {
 
   return (
     <div>
-      <p className="text-sm font-semibold text-gray-50 lg:text-base">{label}</p>
+      <p className="font-semibold text-white">{label}</p>
 
-      <ul className="mt-2 ml-4 list-disc space-y-2">
+      <ul className="mt-4  space-y-6">
         {entries.map((entry) => (
           <EntryListItem key={entry.id} entry={entry} />
         ))}
@@ -143,7 +143,7 @@ function EntryListItem({ entry }: { entry: Entry }) {
   let { session } = useLoaderData<typeof loader>();
 
   return (
-    <li className="group">
+    <li className="group leading-7">
       {entry.text}
 
       {session.isAdmin && (
