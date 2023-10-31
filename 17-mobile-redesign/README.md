@@ -1,8 +1,8 @@
-# Adding an authenticated state
+# Mobile redesign
 
-Add a login route that lets admins sign in using a session cookie.
+Give our Work Journal a facelift on smaller screens using Tailwind and some UI design best practices.
 
-Watch on Build UI → [buildui.com/courses/my-first-remix-app/deleting-entries](https://buildui.com/courses/my-first-remix-app/adding-an-authenticated-state)
+Watch on Build UI → [buildui.com/courses/ship-an-app-with-remix/mobile-redesign](https://buildui.com/courses/ship-an-app-with-remix/mobile-redesign)
 
 ## Links
 
@@ -14,7 +14,7 @@ Watch on Build UI → [buildui.com/courses/my-first-remix-app/deleting-entries](
 From the root,
 
 ```sh
-cd 12-adding-an-authenticated-state/end
+cd 17-mobile-redesign/end
 npm i
 npm run dev
 ```
