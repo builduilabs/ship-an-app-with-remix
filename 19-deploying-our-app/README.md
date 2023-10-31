@@ -1,8 +1,8 @@
-# Adding an authenticated state
+# Deploying our app
 
-Add a login route that lets admins sign in using a session cookie.
+Deploy your brand new Work Journal to Fly.io so you can share it with the world!
 
-Watch on Build UI → [buildui.com/courses/my-first-remix-app/deleting-entries](https://buildui.com/courses/my-first-remix-app/adding-an-authenticated-state)
+Watch on Build UI → [buildui.com/courses/ship-an-app-with-remix/deploying-our-app](https://buildui.com/courses/ship-an-app-with-remix/deploying-our-app)
 
 ## Links
 
@@ -14,7 +14,7 @@ Watch on Build UI → [buildui.com/courses/my-first-remix-app/deleting-entries](
 From the root,
 
 ```sh
-cd 12-adding-an-authenticated-state/end
+cd 19-deploying-our-app/end
 npm i
 npm run dev
 ```
