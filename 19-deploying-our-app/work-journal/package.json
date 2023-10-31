@@ -18,6 +18,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.10",
     "@remix-run/dev": "^1.13.0",
     "@remix-run/eslint-config": "^1.13.0",
     "@tailwindcss/forms": "^0.5.3",

@@ -11,7 +11,7 @@ export async function action({ request }: ActionArgs) {
   let formData = await request.formData();
   let { email, password } = Object.fromEntries(formData);
 
-  if (email === "sam@buildui.com" && password === "password") {
+  if (email === "sam@buildui.com" && password === process.env.PASSWORD) {
     let session = await getSession();
     session.set("isAdmin", true);
 
